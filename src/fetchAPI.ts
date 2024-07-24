@@ -45,3 +45,36 @@ function getUsersfromJson(){
         
     })
 }
+
+//Fetching from an external Json placeholder API
+//and bringing data to the form using GET Request
+let getJsonButton= document.getElementById('getjsonbutton')as HTMLElement
+let jsondiv= document.getElementById('getjsondiv')as HTMLElement
+
+getJsonButton.addEventListener('click',getJsonData)
+
+function getJsonData(){
+
+    fetch('https://jsonplaceholder.typicode.com/albums')
+    .then(res=>res.json())
+    .then(data=>{
+
+        for(const jsonData in data){
+            let object=document.createElement('ul')
+            object.setAttribute('id','object')
+            object.style.listStyle='none'
+            object.style.backgroundColor='#007FFF'
+            let jsonDataPropsId=document.createElement('li')
+            jsonDataPropsId.innerText=`ID: ${data[jsonData].id}`
+            let jsonDataPropsUserId=document.createElement('li')
+            jsonDataPropsUserId.innerText=`USER NAME: ${data[jsonData].userId}`
+            let jsonDatapropstitle=document.createElement('li')
+            jsonDatapropstitle.innerText=`TITLE: ${data[jsonData].title}`
+            object.appendChild(jsonDataPropsId)
+            object.appendChild(jsonDataPropsUserId)
+            object.appendChild(jsonDatapropstitle)
+    
+            jsondiv.appendChild(object)
+        }
+    })
+}
